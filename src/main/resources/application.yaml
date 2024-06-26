@@ -1,0 +1,11 @@
+spring:
+  application: 
+    name: kafkaretryer
+
+
+#KAFKA
+kafka:
+  bootstrap:
+    server: "http://localhost:9092"
+  consumer:
+    group:  "group-01"
