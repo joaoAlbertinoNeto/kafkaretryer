@@ -1,5 +1,7 @@
 package com.joao.kafka.kafkaretryer.application.ports.in;
 
+import com.joao.kafka.kafkaretryer.model.kafka.Event;
+
 public interface EventConsumerPortIn{
-    public void receiveEvent (String receivedEvent) throws Exception;
+    public void inputEvent (Event receivedEvent) throws Exception;
 }

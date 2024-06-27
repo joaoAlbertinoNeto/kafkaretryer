@@ -16,10 +16,10 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 public class KafkaInitListener {
 
     @Value("${kafka.bootstrap.server}")
-    private String KAFKA_BROKER ;
+    private String bootstrapServer ;
 
     @Value("${kafka.consumer.group}")
-    private String GROUP_ID = "your-consumer-group";
+    private String groupId;
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
@@ -30,8 +30,8 @@ public class KafkaInitListener {
 
     public Map<String, Object> createConsumerProperties() {
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BROKER);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         return props;

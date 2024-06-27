@@ -2,6 +2,7 @@ package com.joao.kafka.kafkaretryer.infrastructure.kafka.in;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Service;
 
@@ -28,15 +29,20 @@ public class KafkaConsumer implements EventConsumerPortIn{
         attempts = "3", 
         autoCreateTopics = "true",
         include = RuntimeException.class)
-    @Override
     public void receiveEvent(String receivedEvent) throws Exception {
         try {
             Event event = objectMapper.readValue(receivedEvent, Event.class);
             log.info("Received event : {}" ,event);
-            eventConsumerProcessor.processEvent(event);
+            this.inputEvent(event);
+            
         } catch (Exception e) {
             log.error("Error : {} ", e.getLocalizedMessage());
             throw e;
         }
+    }
+
+    @Override
+    public void inputEvent(Event receivedEvent) throws Exception {
+        eventConsumerProcessor.processEvent(receivedEvent);
     }
 }
